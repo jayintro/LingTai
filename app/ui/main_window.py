@@ -40,6 +40,12 @@ class MainWindow(tk.Tk):
 
         self.protocol("WM_DELETE_WINDOW", self._on_close)
 
+        # 全局屏蔽 Alt 和 F10 键，防止 IME 组字时误激活菜单栏
+        # Alt 单键在 Windows 上会激活菜单栏，IME 组字过程中可能产生 Alt 事件
+        self.bind_all("<Alt_L>", lambda e: "break")
+        self.bind_all("<Alt_R>", lambda e: "break")
+        self.bind_all("<F10>", lambda e: "break")
+
     # ─── 菜单 ────────────────────────────────────────────────────────
 
     def _build_menu(self):
@@ -48,12 +54,13 @@ class MainWindow(tk.Tk):
         m_tools.add_command(label="运行环境（JDK / Python）", command=self._open_runtime_mgr)
         m_tools.add_separator()
         m_tools.add_command(label="退出", command=self._on_close)
-        menubar.add_cascade(label="设置", menu=m_tools)
+        # underline=-1 禁用菜单助记符，防止 IME 组字时 Alt 事件误激活菜单栏
+        menubar.add_cascade(label="设置", menu=m_tools, underline=-1)
 
         m_log = tk.Menu(menubar, tearoff=0)
         m_log.add_command(label="清理 7 天前日志", command=self._clean_old_logs)
         m_log.add_command(label="清理全部日志", command=self._clean_all_logs)
-        menubar.add_cascade(label="日志", menu=m_log)
+        menubar.add_cascade(label="日志", menu=m_log, underline=-1)
 
         self.configure(menu=menubar)
 

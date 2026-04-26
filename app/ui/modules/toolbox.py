@@ -115,6 +115,9 @@ class ToolboxModule(BaseModule):
         self._search_var.trace_add("write", self._on_search_changed)
         self._search_entry.bind("<Escape>", self._clear_search)
         self._search_entry.bind("<Return>", self._search_launch_first)
+        self._search_entry.bind("<Down>", self._nav_to_tree)
+        # 注意：搜索栏不屏蔽 Alt/F10，避免拦截 IME 切换中英文的按键导致吞字
+        # 菜单栏激活问题通过 main_window 中禁用菜单助记符解决
 
         tree_frame = ttk.Frame(parent)
         tree_frame.pack(fill="both", expand=True)
@@ -146,6 +149,7 @@ class ToolboxModule(BaseModule):
         self._ctx_menu.add_command(label="✕ 删除", command=self._delete_tool)
         self.tool_tree.bind("<Button-3>", self._show_context_menu)
         self.tool_tree.bind("<Double-1>", lambda e: self._launch())
+        self.tool_tree.bind("<Return>", lambda e: self._launch())
         self.tool_tree.bind("<Control-f>", self._focus_search)
         self.tool_tree.bind("<Control-F>", self._focus_search)
         # 搜索栏也支持 Ctrl+F
@@ -157,6 +161,14 @@ class ToolboxModule(BaseModule):
     def activate(self):
         """切换到工具箱时刷新数据"""
         self._refresh_categories()
+        # 启动后默认聚焦第一行工具
+        def _focus_first():
+            children = self.tool_tree.get_children()
+            if children:
+                self.tool_tree.selection_set(children[0])
+                self.tool_tree.focus(children[0])
+            self.tool_tree.focus_set()
+        self.after(100, _focus_first)
 
     # ─── 分类操作 ──────────────────────────────────────────────────────
 
@@ -179,6 +191,16 @@ class ToolboxModule(BaseModule):
         cat = self.cat_listbox.get(sel[0])
         self._current_category = None if cat == "全部" else cat
         self._refresh_tool_list()
+        # 切换分类后默认聚焦第一行工具
+        # 延迟执行：<<ListboxSelect>> 事件后 Listbox 会抢焦点，
+        # 用 after 让事件循环先完成，再将焦点转到 Treeview
+        def _focus_first():
+            children = self.tool_tree.get_children()
+            if children:
+                self.tool_tree.selection_set(children[0])
+                self.tool_tree.focus(children[0])
+            self.tool_tree.focus_set()
+        self.after(50, _focus_first)
 
     def _new_category(self):
         d = InputDialog(self, "新建分类", "请输入分类名称：")
@@ -268,6 +290,11 @@ class ToolboxModule(BaseModule):
         """应用搜索过滤"""
         self._search_text = self._search_var.get().strip().lower()
         self._refresh_tool_list()
+        # 搜索后默认选中第一行结果
+        children = self.tool_tree.get_children()
+        if children:
+            self.tool_tree.selection_set(children[0])
+            self.tool_tree.focus(children[0])
 
     def _clear_search(self, event=None):
         """清除搜索条件"""
@@ -279,11 +306,20 @@ class ToolboxModule(BaseModule):
         self.tool_tree.focus_set()
 
     def _focus_search(self, event=None):
-        """Ctrl+F：聚焦搜索栏并选中已有内容"""
+        """Ctrl+F：聚焦搜索栏"""
         self._search_entry.focus_set()
-        self._search_entry.select_range(0, "end")
-        self._search_entry.icursor("end")
         return "break"  # 阻止事件继续传播
+
+    def _nav_to_tree(self, event=None):
+        """↓ 键：从搜索栏跳转到 Treeview 当前行"""
+        self.tool_tree.focus_set()
+        children = self.tool_tree.get_children()
+        if children:
+            sel = self.tool_tree.selection()
+            if not sel:
+                self.tool_tree.selection_set(children[0])
+                self.tool_tree.focus(children[0])
+        return "break"
 
     def _search_launch_first(self, event=None):
         """回车：启动搜索结果中的第一个工具"""
