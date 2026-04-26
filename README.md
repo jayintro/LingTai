@@ -64,10 +64,6 @@ LingTai 是一个轻量级桌面应用平台，当前仅具备工具箱模块，
 
 ### 源码运行
 
-**bash**
-
-复制
-
 ```bash
 # 克隆仓库
 git clone https://github.com/your-username/LingTai.git
