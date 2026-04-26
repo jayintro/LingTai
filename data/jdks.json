@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0563ebf5-5dd1-49c6-9553-114bd4ed025c",
+    "name": "jdk8",
+    "version": "1.8.0",
+    "java_path": "C:/Program Files (x86)/Java/jdk-1.8/bin/java.exe",
+    "description": ""
+  },
+  {
+    "id": "15824b4b-b0db-4d0d-a6af-2de3a2cca0c9",
+    "name": "jdk17",
+    "version": "17.0.17",
+    "java_path": "C:/Program Files/Java/jdk-17/bin/java.exe",
+    "description": ""
+  },
+  {
+    "id": "d5d84abc-7cc1-481d-b961-b8fc7d4b4286",
+    "name": "jdk21",
+    "version": "21.0.9",
+    "java_path": "C:/Program Files/Java/jdk-21/bin/java.exe",
+    "description": ""
+  },
+  {
+    "id": "4b019970-c425-4145-bfed-975f80f48eda",
+    "name": "java8FX",
+    "version": "1.8.0",
+    "java_path": "C:/Program Files/Java/jdk1.8.0_202/bin/java.exe",
+    "description": ""
+  }
+]

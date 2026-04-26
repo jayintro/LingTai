@@ -1,0 +1,16 @@
+[
+  {
+    "id": "69484a81-5e8f-4884-a3e2-7a4cab26bede",
+    "name": "Python3.12",
+    "version": "3.12.13",
+    "python_path": "C:/Users/fuyuanzi/miniconda3/envs/Ytools/python.exe",
+    "description": ""
+  },
+  {
+    "id": "156ebd50-c87a-4011-b9e9-5843cc4ab6dd",
+    "name": "python3.9",
+    "version": "3.9.25",
+    "python_path": "C:/Users/fuyuanzi/miniconda3/envs/python39/python.exe",
+    "description": ""
+  }
+]

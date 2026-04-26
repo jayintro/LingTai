@@ -1,0 +1,22 @@
+[
+  {
+    "id": "eb05823f-3c32-4279-8a57-5287fca27d84",
+    "name": "BlueTeam_ABC",
+    "jar_path": "C:\\Users\\fuyuanzi\\Desktop\\tools\\security\\BlueTeam_V3.58\\BlueTeam_ABC_123.jar",
+    "jdk_id": "15824b4b-b0db-4d0d-a6af-2de3a2cca0c9",
+    "jdk_args": "-Xmx512m",
+    "program_args": "",
+    "description": "JavaFX工具，需要JDK17+",
+    "category": "安全工具"
+  },
+  {
+    "id": "cf2133ab-a636-4450-9a5e-7927563292c2",
+    "name": "aksk_tool",
+    "jar_path": "C:\\Users\\fuyuanzi\\Desktop\\tools\\security\\天狐工具箱\\tools\\gui_scan\\aksk_tool.jar",
+    "jdk_id": "0563ebf5-5dd1-49c6-9553-114bd4ed025c",
+    "jdk_args": "",
+    "program_args": "",
+    "description": "",
+    "category": "扫描工具"
+  }
+]
